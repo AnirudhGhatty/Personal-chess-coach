@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title> Bro thinks this is dev mode </title>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+       <style>
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #222;
+    text-align: center;
+    cursor: crosshair;
+    height: 100vh;
+}
+
+.container {
+    margin-top: 100px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+h1:hover {
+    transform: rotate(1deg) scale(1.05);
+    color: #ff4d4d;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #2d89ef;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: translateX(50px);
+    background-color: #e81123;
+}
+
+p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+@keyframes floaty {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+}
+
+p:hover {
+    animation: floaty 0.5s infinite;
+}
+ </style>
+<script>
+    function changeImage(){
+    var img = document.getElementById("image");
+    img.style.width = "69%";
+    }
+    function resetImage(){
+        var img = document.getElementById("image");
+        img.style.width = "500px"
+    }
+    function showMessage(){
+        document.getElementById("");
+    }
+</script>
+    </head>
+    <body>
+        <h1>Haha , bro really thought!</h1>
+        <p>This is how it felt to ragebait you! :p</p>
+        <img src="./static/Screenshot%202026-04-09%20220839.png" style="width:500px" id="image" onmouseover="changeImage()" onmouseout="resetImage()">
+
+        <div class = "card final">
+            <button class = "btn btn-custom mt-3" onclick="showMessage()">
+              Click on this button to actually enter the dev mode!!
+            </button>
+        </div>
+    </body>
+</html>

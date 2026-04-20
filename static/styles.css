@@ -1,0 +1,24 @@
+h2{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+p{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: medium;
+}
+.nav-link:hover {
+    color: #00ff88 !important;
+}
+.card:hover {
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+textarea::placeholder {
+  color: #cccccc;
+  opacity: 1; 
+}
+.card {
+    border-radius: 12px;
+    transition: 0.2s ease;
+}
