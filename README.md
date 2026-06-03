@@ -1,0 +1,1 @@
+A personal chess coach that helps you analyze , study and learn from your games from the past. This application is mostly focused on understanding the players more than the position. This is a currently an on going project
