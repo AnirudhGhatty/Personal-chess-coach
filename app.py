@@ -19,7 +19,8 @@ def analyze():
         "BlackElo" : parsed_data["black_elo"] ,
         "ECO" : parsed_data["eco"] ,
         "Date" : parsed_data["date"] ,
-        "Event" : parsed_data["event"]
+        "Event" : parsed_data["event"] ,
+        "Moves" : parsed_data["moves"]
     }
     return render_template("results.html" , results = results)
 
