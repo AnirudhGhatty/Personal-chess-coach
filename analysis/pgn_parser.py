@@ -10,5 +10,10 @@ def parse_pgn(pgn_text):
     return{
         "white" : game.headers.get("White" , "Unknown") ,
         "black" : game.headers.get("Black" , "Unknown") ,
-        "result" : game.headers.get("Result" , "*")
+        "result" : game.headers.get("Result" , "*") ,
+        "white_elo" : game.headers.get("WhiteElo" , "?") ,
+        "black_elo" : game.headers.get("BlackElo" , "?") ,
+        "eco" : game.headers.get("ECO" , "?") , 
+        "date" : game.headers.get("Date" , "?") ,
+        "event" : game.headers.get("Event" , "?")
     }

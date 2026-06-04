@@ -14,7 +14,12 @@ def analyze():
     results = {
         "White" : parsed_data["white"] ,
         "Black" : parsed_data["black"] ,
-        "Result" : parsed_data["result"]
+        "Result" : parsed_data["result"] ,
+        "WhiteElo" : parsed_data["white_elo"] ,
+        "BlackElo" : parsed_data["black_elo"] ,
+        "ECO" : parsed_data["eco"] ,
+        "Date" : parsed_data["date"] ,
+        "Event" : parsed_data["event"]
     }
     return render_template("results.html" , results = results)
 
