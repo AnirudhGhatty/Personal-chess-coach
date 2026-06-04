@@ -15,7 +15,7 @@ def parse_pgn(pgn_text):
 
 if __name__ == "__main__":
     sample_pgn = """
-     [Event "Live Chess"]
+[Event "Live Chess"]
 [Site "Chess.com"]
 [Date "2026.06.03"]
 [Round "?"]
