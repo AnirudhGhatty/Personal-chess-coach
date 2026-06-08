@@ -3,33 +3,47 @@
     <title>Analysis Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href = "../static/styles.css" rel = "stylesheet">
+    <link rel = "icon" href = "../static/favicon.png.png">
     <meta name ="viewport" content = "width = device-width , initial-scale = 1.0">
 </head>
 <body class="bg-dark text-white">
-    <div class = "container mt-5">
-  <h2>Analysis</h2>
-  <p>White : {{ results.White }}</p>
-  <p>Black : {{ results.Black }}</p>
-  <p>Result : {{ results.Result }}</p>
-  <p>White Elo : {{ results.WhiteElo }}</p>
-  <p>Black Elo : {{ results.BlackElo }}</p>
-  <p>Opening code : {{ results.ECO }}</p>
-  <p>Date : {{ results.Date }}</p>
-  <p>Event : {{ results.Event }}</p>
-  <p>Moves played : {{ results.Moves }}</p>
-  <div class="d-flex justify-content-center mt-3">
+    <div class = "card text-white bg-secondary p-4 mb-4">
+  <h2>♟️Game Information</h2>
+  <hr>
+  <p><strong>White</strong>: {{ results.White }}</p>
+  <p><strong>Black</strong> : {{ results.Black }}</p>
+  <p><strong>Result</strong> : {{ results.Result }}</p>
+  <p><strong>White Elo</strong> : {{ results.WhiteElo }}</p>
+  <p><strong>Black Elo</strong> : {{ results.BlackElo }}</p>
+  <p><strong>Opening code</strong> : {{ results.ECO }}</p>
+  <p><strong>Date</strong> : {{ results.Date }}</p>
+  <p><strong>Event</strong> : {{ results.Event }}</p>
+  <p><strong>Moves played</strong> : {{ results.Moves }}</p>
+    </div>
   
 <hr>
 
-<div class = "container mt-5">
+<div class = "card text-white bg-secondary p-4 mb-4">
 
-<p>Evaluations : {{ results.Evaluations}}</p>
-<p>Blunders : {{ results.Blunders }}</p>
-<p>Report : {{ results.Report }}</p>
+<h2>⚙️Engine analysis</h3>
+
+<p><strong>Evaluations generated</strong> : 
+  {{ results.Evaluations|length}}</p>
+<p><strong>Blunders Found</strong>: 
+  {{ results.Blunders|length }}</p>
+</div>
+
+<hr>
+
+<div class = "card text-white bg-secondary p-4 mb-4">
+
+<h2>Coach Report!</h3>
+
+<p><strong>Report</strong> : 
+  {{ results.Report }}</p>
 
 </div>
 
   <a href="/" class="btn btn-primary">Analyze another game</a>
-</div>
-</div>
+
 </body>
