@@ -181,14 +181,67 @@
 
     <script>
 
-        var board = Chessboard('board', {
-            position: 'start',
-            pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
-        });
+      const pgn = `{{ results.PGN | safe }}`;
+
+    console.log(pgn);
+
+    var game = new Chess();
+
+    game.load_pgn(pgn);
+
+    var moves = game.history();
+
+    console.log(moves);
+
+    var replayGame = new Chess();
+
+    var positions = [];
+
+    positions.push(replayGame.fen());
+
+    for (let move of moves) {
+
+        replayGame.move(move);
+
+        positions.push(replayGame.fen());
+
+    }
+
+    console.log(positions);
+
+    var board = Chessboard('board', {
+        position: 'start',
+        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+    });
+
+    let currentPosition = 0;
+
+    document.getElementById("nextBtn").addEventListener("click", function () {
+
+    if (currentPosition < positions.length - 1) {
+
+        currentPosition++;
+
+        board.position(positions[currentPosition]);
+
+    }
+
+});
+
+document.getElementById("prevBtn").addEventListener("click", function () {
+
+    if (currentPosition > 0) {
+
+        currentPosition--;
+
+        board.position(positions[currentPosition]);
+
+    }
+
+});
 
     </script>
 
 </body>
 
 </html>
-```

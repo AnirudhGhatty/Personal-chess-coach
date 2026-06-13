@@ -33,7 +33,8 @@ def analyze():
         "Blunders" : analysis["blunders"] ,
         "Report" : analysis["report"] , 
 
-        "MoveReviews" : analysis["move_reviews"]
+        "MoveReviews" : analysis["move_reviews"] ,
+        "PGN" : pgn
     }
     return render_template("results.html" , results = results)
 

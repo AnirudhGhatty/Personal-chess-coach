@@ -5,7 +5,6 @@ import io
 
 
 def safe_score(info):
-    """Convert Stockfish score to centipawns safely."""
     score = info["score"].white().score(mate_score=10000)
     return score if score is not None else 0
 
