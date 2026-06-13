@@ -31,7 +31,9 @@ def analyze():
 
         "Evaluations" : analysis["evaluations"] ,
         "Blunders" : analysis["blunders"] ,
-        "Report" : analysis["report"]
+        "Report" : analysis["report"] , 
+
+        "MoveReviews" : analysis["move_reviews"]
     }
     return render_template("results.html" , results = results)
 

@@ -19,9 +19,21 @@ def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
     engine = chess.engine.SimpleEngine.popen_uci(engine_path)
     board = game.board()
 
-    evaluations = []
+    evaluations = [] 
+    move_reviews = []
+    move_number = 1
 
     for move in game.mainline_moves():
+
+        player = "white" if board.turn else "black"
+        san_move = board.san(move)
+
+        move_reviews.append({
+            "move_number" : move_number ,
+            "player" : player ,
+            "move" : san_move
+        })
+
         board.push(move)
 
         info = engine.analyse(board, chess.engine.Limit(depth=8))
@@ -29,9 +41,15 @@ def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
 
         evaluations.append(score)
 
+        if player == "black":
+            move_number += 1
+
     engine.quit()
 
-    return evaluations
+    return {
+        "evaluations" : evaluations ,
+        "move_reviews" : move_reviews
+        }
 
 
 def detect_blunders(evaluations, threshold=200):
@@ -55,8 +73,9 @@ def detect_blunders(evaluations, threshold=200):
                 "move_number": move_number,
                 "loss": drop,
                 "before": prev_eval,
+                
                 "after": curr_eval,
-                "message": f"Move {move_number}: BLUNDER (lost ~{drop/100:.1f} pawns)"
+                "message": f"Move {move_number}: BLUNDER (lost ~{drop/100:.1f} points)"
             })
 
     return blunders
@@ -64,15 +83,19 @@ def detect_blunders(evaluations, threshold=200):
 
 def analyze_with_blunders(pgn_text, engine_path="stockfish/stockfish.exe"):
 
-    evaluations = analyze_game(pgn_text, engine_path)
+    analysis = analyze_game(pgn_text, engine_path)
     
-    if evaluations is None:
+    if analysis is None:
         return None
+
+    evaluations = analysis["evaluations"]
+    move_reviews = analysis["move_reviews"]
 
     blunders = detect_blunders(evaluations)
 
     return {
         "evaluations": evaluations,
+        "move_reviews" : move_reviews ,
         "blunders": blunders,
         "report": [b["message"] for b in blunders] if blunders else ["No major blunders found 👍"]
     }
