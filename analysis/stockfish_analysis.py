@@ -16,40 +16,42 @@ def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
         return None
 
     engine = chess.engine.SimpleEngine.popen_uci(engine_path)
-    board = game.board()
 
-    evaluations = [] 
-    move_reviews = []
-    move_number = 1
+    try:
+        board = game.board()
 
-    for move in game.mainline_moves():
+        evaluations = []
+        move_reviews = []
+        move_number = 1
 
-        player = "white" if board.turn else "black"
-        san_move = board.san(move)
+        for move in game.mainline_moves():
 
-        move_reviews.append({
-            "move_number" : move_number ,
-            "player" : player ,
-            "move" : san_move
-        })
+            player = "white" if board.turn else "black"
+            san_move = board.san(move)
 
-        board.push(move)
+            move_reviews.append({
+                "move_number": move_number,
+                "player": player,
+                "move": san_move
+            })
 
-        info = engine.analyse(board, chess.engine.Limit(depth=8))
-        score = safe_score(info)
+            board.push(move)
 
-        evaluations.append(score)
+            info = engine.analyse(board, chess.engine.Limit(depth=4))
+            score = safe_score(info)
 
-        if player == "black":
-            move_number += 1
+            evaluations.append(score)
 
-    engine.quit()
+            if player == "black":
+                move_number += 1
 
-    return {
-        "evaluations" : evaluations ,
-        "move_reviews" : move_reviews
+        return {
+            "evaluations": evaluations,
+            "move_reviews": move_reviews
         }
 
+    finally:
+        engine.quit()
 
 def detect_blunders(evaluations, threshold=200):
 
