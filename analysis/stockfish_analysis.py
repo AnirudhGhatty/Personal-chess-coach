@@ -37,7 +37,7 @@ def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
 
             board.push(move)
 
-            info = engine.analyse(board, chess.engine.Limit(depth=4))
+            info = engine.analyse(board, chess.engine.Limit(depth=16))
             score = safe_score(info)
 
             evaluations.append(score)
