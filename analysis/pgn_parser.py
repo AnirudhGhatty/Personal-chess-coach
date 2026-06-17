@@ -7,12 +7,12 @@ def parse_pgn(pgn_text):
     move_count = 0
     count = 0
 
-    for move in game.mainline_moves():
+    for _ in game.mainline_moves():
         count += 1
     
     move_count = count//2
 
-    if game == None:
+    if game is None:
         return None
     
     return{

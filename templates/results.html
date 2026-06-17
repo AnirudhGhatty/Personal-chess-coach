@@ -39,7 +39,6 @@
 
         <div class="row">
 
-            
             <div class="col-lg-7">
 
                 <div class="card text-white bg-secondary p-4 mb-4">
@@ -73,6 +72,21 @@
                         </button>
 
                     </div>
+
+                </div>
+             <div class="text-center mt-4">
+
+                 <h5 id="moveDisplay">
+                   Start Position
+                 </h5>
+
+                <p id="evaluationDisplay">
+                    Evaluation: --
+                </p>
+
+                <p id="blunderDisplay"
+                class="text-warning">
+                 </p>
 
                 </div>
 
@@ -219,11 +233,9 @@
     document.getElementById("nextBtn").addEventListener("click", function () {
 
     if (currentPosition < positions.length - 1) {
-
         currentPosition++;
-
         board.position(positions[currentPosition]);
-
+        updateReview();
     }
 
 });
@@ -231,14 +243,51 @@
 document.getElementById("prevBtn").addEventListener("click", function () {
 
     if (currentPosition > 0) {
-
         currentPosition--;
-
         board.position(positions[currentPosition]);
-
+        updateReview();
     }
 
 });
+
+const evaluations = {{ results.Evaluations | tojson | safe}};
+const blunders = {{results.Blunders | tojson | safe}};
+const move_reviews = {{results.MoveReviews | tojson | safe}};
+
+console.log(evaluations);
+console.log(blunders);
+console.log(move_reviews);
+
+const moveDisplay = document.getElementById("moveDisplay");
+const evaluationDisplay = document.getElementById("evaluationDisplay");
+const blunderDisplay = document.getElementById("blunderDisplay");
+
+function updateReview() {
+
+    board.position(positions[currentPosition]);
+
+    console.log(
+    "Position:", currentPosition,
+    "Move:", moves[currentPosition - 1],
+    "Eval:", evaluations[currentPosition - 1]
+);
+
+    if (currentPosition === 0) {
+        moveDisplay.innerText = "Start Position";
+        evaluationDisplay.innerText = "Evaluation: --";
+        blunderDisplay.innerText = "";
+        return;
+    }
+
+    moveDisplay.innerText = moves[currentPosition - 1];
+
+    evaluationDisplay.innerText =
+        "Evaluation: " + evaluations[currentPosition - 1];
+
+    const blunder = blunders.find(b => b.move_index === currentPosition);
+
+    blunderDisplay.innerText = blunder ? blunder.message : "";
+}
 
     </script>
 
