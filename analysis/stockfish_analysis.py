@@ -12,6 +12,20 @@ def safe_score(info):
 def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
     game = chess.pgn.read_game(io.StringIO(pgn_text))
 
+    def classify_move(eval_loss):
+
+        if eval_loss < 50:
+            return "OK"
+        
+        elif eval_loss < 100:
+            return "Inaccuracy"
+        
+        elif eval_loss < 300:
+            return "Mistake"
+        
+        else:
+            return "Blunder"
+
     if game is None:
         return None
 
@@ -29,18 +43,30 @@ def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
             player = "white" if board.turn else "black"
             san_move = board.san(move)
 
-            move_reviews.append({
-                "move_number": move_number,
-                "player": player,
-                "move": san_move
-            })
+            before_info = engine.analyse(board , chess.engine.Limit(depth=16))
+            before_score = safe_score(before_info)
 
             board.push(move)
 
-            info = engine.analyse(board, chess.engine.Limit(depth=16))
-            score = safe_score(info)
+            after_info = engine.analyse(board, chess.engine.Limit(depth=16))
+            after_score = safe_score(after_info)
 
-            evaluations.append(score)
+            loss = abs(after_score - before_score)
+
+            print(f"{san_move}: before={before_score}, after={after_score}, loss={loss}")
+
+            classify = classify_move(loss)
+
+            move_reviews.append({
+                "move_number": move_number,
+                "player": player,
+                "move": san_move ,
+                "before_eval" : before_score ,
+                "after_eval" : after_score ,
+                "Classification" : classify
+            })
+
+            evaluations.append(after_score)
 
             if player == "black":
                 move_number += 1
