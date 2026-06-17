@@ -84,8 +84,8 @@
                     Evaluation: --
                 </p>
 
-                <p id="blunderDisplay"
-                class="text-warning">
+                <p id="classificationDisplay"
+                class="fw-bold">
                  </p>
 
                 </div>
@@ -195,7 +195,7 @@
 
     <script>
 
-      const pgn = `{{ results.PGN | safe }}`;
+    const pgn = `{{ results.PGN | safe }}`;
 
     console.log(pgn);
 
@@ -260,7 +260,7 @@ console.log(move_reviews);
 
 const moveDisplay = document.getElementById("moveDisplay");
 const evaluationDisplay = document.getElementById("evaluationDisplay");
-const blunderDisplay = document.getElementById("blunderDisplay");
+const classificationDisplay = document.getElementById("classificationDisplay");
 
 function updateReview() {
 
@@ -279,14 +279,26 @@ function updateReview() {
         return;
     }
 
-    moveDisplay.innerText = moves[currentPosition - 1];
+   const review = move_reviews[currentPosition-1];
 
-    evaluationDisplay.innerText =
-        "Evaluation: " + evaluations[currentPosition - 1];
+   moveDisplay.innerText = `${review.player} played ${review.move}`;
+   evaluationDisplay.innerText = `Evaluation: ${(review.after_eval / 100).toFixed(1)}`;
 
-    const blunder = blunders.find(b => b.move_index === currentPosition);
+   let label = review.Classification
 
-    blunderDisplay.innerText = blunder ? blunder.message : "";
+ if (label === "OK")
+    label = "✅ OK";
+
+else if (label === "Inaccuracy")
+    label = "⚠️ Inaccuracy";
+
+else if (label === "Mistake")
+    label = "❌ Mistake";
+
+else if (label === "Blunder")
+    label = "🚨 Blunder";
+
+    classificationDisplay.innerText = label;
 }
 
     </script>
