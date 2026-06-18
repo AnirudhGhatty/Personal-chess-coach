@@ -2,6 +2,7 @@ import chess
 import chess.pgn
 import chess.engine
 import io
+import os
 
 
 def safe_score(info):
@@ -9,7 +10,7 @@ def safe_score(info):
     return score if score is not None else 0
 
 
-def analyze_game(pgn_text, engine_path="stockfish/stockfish.exe"):
+def analyze_game(pgn_text, engine_path=os.getenv("STOCKFISH_PATH" , "stockfish/stockfish.exe")):
     game = chess.pgn.read_game(io.StringIO(pgn_text))
 
     def classify_move(eval_loss):
@@ -108,7 +109,7 @@ def detect_blunders(evaluations, threshold=200):
     return blunders
 
 
-def analyze_with_blunders(pgn_text, engine_path="stockfish/stockfish.exe"):
+def analyze_with_blunders(pgn_text, engine_path=os.getenv("STOCKFISH_PATH" , "stockfish/stockfish.exe")):
 
     analysis = analyze_game(pgn_text, engine_path)
     
