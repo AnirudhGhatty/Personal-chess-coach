@@ -49,6 +49,13 @@
 
                     <div class="d-flex justify-content-center mt-4">
 
+                        <div id = "evalBarContainer">
+                            
+                        <div id = "evalBarWhite"></div>
+                        <div id = "evalBarBlack"></div>
+
+                        </div>
+
                         <div id="board"
                             style="width: min(90vw, 500px);">
                         </div>
@@ -261,6 +268,23 @@ console.log(move_reviews);
 const moveDisplay = document.getElementById("moveDisplay");
 const evaluationDisplay = document.getElementById("evaluationDisplay");
 const classificationDisplay = document.getElementById("classificationDisplay");
+const evalBarWhite = document.getElementById("evalBarWhite");
+const evalBarBlack = document.getElementById("evalBarBlack");
+
+function updateEvalBar(evalScore) {
+
+    let normalized =
+        Math.max(-1000, Math.min(1000, evalScore));
+
+    let whitePercent =
+        ((normalized + 1000) / 2000) * 100;
+
+    evalBarWhite.style.height =
+        `${whitePercent}%`;
+
+    evalBarBlack.style.height =
+        `${100 - whitePercent}%`;
+}
 
 function updateReview() {
 
@@ -272,17 +296,19 @@ function updateReview() {
     "Eval:", evaluations[currentPosition - 1]
 );
 
-    if (currentPosition === 0) {
-        moveDisplay.innerText = "Start Position";
-        evaluationDisplay.innerText = "Evaluation: --";
-        blunderDisplay.innerText = "";
-        return;
-    }
+if (currentPosition === 0) {
+    moveDisplay.innerText = "Start Position";
+    evaluationDisplay.innerText = "Evaluation: --";
+    classificationDisplay.innerText = "";
+    updateEvalBar(0);
+    return;
+}
 
    const review = move_reviews[currentPosition-1];
 
    moveDisplay.innerText = `${review.player} played ${review.move}`;
    evaluationDisplay.innerText = `Evaluation: ${(review.after_eval / 100).toFixed(1)}`;
+   updateEvalBar(review.after_eval);
 
    let label = review.Classification
 
@@ -300,6 +326,7 @@ else if (label === "Blunder")
 
     classificationDisplay.innerText = label;
 }
+updateEvalBar(0);
 
     </script>
 
