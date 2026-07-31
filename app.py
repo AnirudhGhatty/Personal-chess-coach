@@ -20,20 +20,22 @@ def analyze():
     
     parsed_data = parse_pgn(pgn)
     conn = sqlite3.connect("games.db")
-    cursor = conn.cursor
+    cursor = conn.cursor()
 
     cursor.execute("""
                    INSERT INTO games(white,black,result,opening,white_elo,black_elo,pgn)
                    values(?,?,?,?,?,?,?)""",
                    (
-                       parsed_data["White"],
-                       parsed_data["Black"],
-                       parsed_data["Result"],
-                       parsed_data["ECO"],
-                       parsed_data["WhiteElo"],
-                       parsed_data["BlackElo"],
+                       parsed_data["white"],
+                       parsed_data["black"],
+                       parsed_data["result"],
+                       parsed_data["eco"],
+                       parsed_data["white_elo"],
+                       parsed_data["black_elo"],
                        pgn
                    ))
+    conn.commit()
+    conn.close()
     results = {
         "White" : parsed_data["white"] ,
         "Black" : parsed_data["black"] ,
@@ -62,6 +64,7 @@ def devmode():
 def game_history():
     
     conn = sqlite3.connect("games.db")
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
     cursor.execute("""
