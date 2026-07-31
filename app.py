@@ -71,6 +71,7 @@ def game_history():
                    SELECT * FROM games ORDER BY analyzed_at DESC""")
     
     games = cursor.fetchall()
+    
     conn.close()
 
     return render_template("history.html", games = games)
