@@ -1,58 +1,123 @@
-# ♜ Personal Chess Coach
+# ♜ PawnSense
 
-A Flask-based chess analysis web application that helps players understand their games by analyzing PGN files and providing insights powered by Stockfish.
+> **Stop guessing. Start understanding.**
 
-## Features
+PawnSense is a Flask-based chess analysis web application that helps players review their games using the **Stockfish chess engine**. Simply paste a PGN, and PawnSense provides engine evaluations, move classifications, an interactive replay board, an evaluation bar, and stores previously analyzed games for future reference.
+
+---
+
+# 📸 Screenshots
+
+> Add your screenshots here.
+
+### 🏠 Home Page
+![Home Page](static/screenshots/home.png)
+
+### ♟️ Analysis Page
+![Analysis Page](static/screenshots/analysis.png)
+
+### 📚 Game History
+![Game History](static/screenshots/history.png)
+
+---
+
+# ✨ Features
 
 ### ✅ PGN Analysis
 
-* Paste any valid PGN directly into the web interface.
-* Extracts game metadata including:
+- Paste any valid PGN from Chess.com or Lichess
+- Automatically extracts:
+  - White player
+  - Black player
+  - Result
+  - White Elo
+  - Black Elo
+  - Event
+  - Date
+  - ECO Opening Code
+  - Move list
 
-  * White player
-  * Black player
-  * Game result
-  * White Elo
-  * Black Elo
-  * Event
-  * Date
-  * ECO (Opening Code)
-  * Total moves played
+---
 
-### ✅ Stockfish Integration
+### ✅ Stockfish Analysis
 
-* Uses the Stockfish chess engine for position evaluation.
-* Generates move-by-move evaluations throughout the game.
+- Position evaluation after every move
+- Engine-powered analysis using Stockfish
+- Displays evaluation in centipawns
 
-### ✅ Blunder Detection
+---
 
-* Detects significant evaluation drops.
-* Highlights moves that may have cost material or positional advantage.
+### ✅ Move Classification
 
-### ✅ Web Interface
+Each move is automatically classified as:
 
-* Built using Flask and Bootstrap.
-* Simple interface for submitting PGNs and viewing analysis results.
+- ✅ OK
+- ⚠️ Inaccuracy
+- ❌ Mistake
+- 🚨 Blunder
 
-## Tech Stack
+---
 
-### Backend
+### ✅ Interactive Game Review
 
-* Python
-* Flask
-* python-chess
-* Stockfish
+- Replay the game move-by-move
+- Navigate using Previous/Next buttons
+- Live board updates using Chessboard.js
 
-### Frontend
+---
 
-* HTML
-* CSS
-* Bootstrap 5
+### ✅ Evaluation Bar
 
-## Project Structure
+- Live evaluation bar updates as you step through the game
+- Visual representation of which side is better
 
-```text
-Personal-chess-coach/
+---
+
+### ✅ Coach Report
+
+Automatically summarizes major mistakes found during the game.
+
+---
+
+### ✅ Game History
+
+Every analyzed game is automatically stored in a SQLite database.
+
+The history page displays:
+
+- White player
+- Black player
+- Result
+- Opening
+- Date analyzed
+
+---
+
+# 🛠 Tech Stack
+
+## Backend
+
+- Python
+- Flask
+- SQLite
+- python-chess
+- Stockfish
+
+## Frontend
+
+- HTML5
+- CSS3
+- Bootstrap 5
+- JavaScript
+- Chess.js
+- Chessboard.js
+
+---
+
+# 📂 Project Structure
+
+```
+PawnSense/
 │
 ├── analysis/
 │   ├── pgn_parser.py
@@ -63,108 +128,115 @@ Personal-chess-coach/
 │   ├── styles.css
 │   ├── favicon.png
 │   └── screenshots/
+│       ├── home.png
+│       ├── analysis.png
+│       └── history.png
 │
 ├── templates/
 │   ├── index.html
 │   ├── results.html
+│   ├── history.html
 │   └── EasterEgg.html
 │
 ├── app.py
-├── README.md
-└── .gitignore
+├── create_db.py
+├── games.db
+├── requirements.txt
+└── README.md
 ```
 
-## Installation
+---
 
-### Clone the repository
+# 🚀 Installation
+
+Clone the repository
 
 ```bash
 git clone https://github.com/AnirudhGhatty/Personal-chess-coach.git
 cd Personal-chess-coach
 ```
 
-### Create a virtual environment
+Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-### Activate virtual environment
+Activate it
 
-Windows:
+### Windows
 
 ```bash
 venv\Scripts\activate
 ```
 
-### Install dependencies
+Install dependencies
 
 ```bash
 pip install flask
 pip install python-chess
-pip install stockfish
 ```
 
-### Download Stockfish
+Download **Stockfish** from the official website and place the executable inside
 
-Download Stockfish from the official website and place the executable inside:
-
-```text
+```
 stockfish/
 └── stockfish.exe
 ```
 
-> Note: The Stockfish executable is intentionally excluded from GitHub because it exceeds GitHub's file size limits.
+> **Note:** The Stockfish executable is intentionally excluded from GitHub because it exceeds GitHub's file size limit.
 
-## Run the Application
+Run the application
 
 ```bash
 python app.py
 ```
 
-Open:
+Open
 
-```text
+```
 http://127.0.0.1:5000
 ```
 
-in your browser.
+---
 
-## Example Workflow
+# 💡 Example Workflow
 
 1. Copy a PGN from Chess.com or Lichess.
-2. Paste it into the analysis box.
+2. Paste it into PawnSense.
 3. Submit the game.
-4. View:
+4. Review:
+   - Game information
+   - Engine evaluation
+   - Evaluation bar
+   - Move classifications
+   - Coach report
+5. Access the game later through the **Game History** page.
 
-   * Player information
-   * Elo ratings
-   * Result
-   * Move count
-   * Engine evaluations
-   * Blunder analysis
+---
 
-## Current Development Status
+# 📌 Project Status
 
-### Completed
+## ✅ Version 1.0 Complete
 
-* [x] Flask application setup
-* [x] PGN parsing
-* [x] Metadata extraction
-* [x] Move counting
-* [x] Stockfish integration
-* [x] Basic blunder detection
-* [x] GitHub project setup
+Current features include:
 
-### Planned Features
+- PGN parsing
+- Stockfish integration
+- Interactive move replay
+- Evaluation bar
+- Move classification
+- SQLite game history
+- Coach report
 
-* [ ] Evaluation graph
-* [ ] Improved analysis UI
-* [ ] Move-by-move review
-* [ ] Tactical mistake explanations
-* [ ] Playstyle analysis
-* [ ] Personalized coaching recommendations
+Future improvements may be added in later versions.
 
-## Author
+---
+
+# 👨‍💻 Author
 
 **Anirudh Ghatty**
+
+B.Tech Computer Science Engineering
+
+GitHub: https://github.com/AnirudhGhatty
