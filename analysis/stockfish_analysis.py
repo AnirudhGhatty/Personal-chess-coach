@@ -119,6 +119,20 @@ def analyze_with_blunders(pgn_text, engine_path=os.getenv("STOCKFISH_PATH" , "st
     evaluations = analysis["evaluations"]
     move_reviews = analysis["move_reviews"]
 
+    white_stats = {
+        "best" : 0 ,
+        "inaccuracy" : 0 ,
+        "mistakes" : 0 ,
+        "blunders" : 0
+    }
+
+    black_stats = {
+        "best" : 0 ,
+        "inaccuracy" : 0 ,
+        "mistakes" : 0 ,
+        "blunders" : 0
+    }
+
     blunders = detect_blunders(evaluations)
 
     return {
