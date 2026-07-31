@@ -1,3 +1,4 @@
+import sqlite3
 from flask import Flask , render_template , request
 from analysis.pgn_parser import parse_pgn
 from analysis.stockfish_analysis import analyze_with_blunders
@@ -18,6 +19,21 @@ def analyze():
     analysis = analyze_with_blunders(pgn)
     
     parsed_data = parse_pgn(pgn)
+    conn = sqlite3.connect("games.db")
+    cursor = conn.cursor
+
+    cursor.execute("""
+                   INSERT INTO games(white,black,result,opening,white_elo,black_elo,pgn)
+                   values(?,?,?,?,?,?,?)""",
+                   (
+                       parsed_data["White"],
+                       parsed_data["Black"],
+                       parsed_data["Result"],
+                       parsed_data["ECO"],
+                       parsed_data["WhiteElo"],
+                       parsed_data["BlackElo"],
+                       pgn
+                   ))
     results = {
         "White" : parsed_data["white"] ,
         "Black" : parsed_data["black"] ,
@@ -41,6 +57,10 @@ def analyze():
 @app.route("/dev_mode")
 def devmode():
     return render_template("EasterEgg.html")
+
+@app.route("/game_history")
+def game_history():
+    return render_template("history.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
