@@ -60,7 +60,17 @@ def devmode():
 
 @app.route("/game_history")
 def game_history():
-    return render_template("history.html")
+    
+    conn = sqlite3.connect("games.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+                   SELECT * FROM games ORDER BY analyzed_at DESC""")
+    
+    games = cursor.fetchall()
+    conn.close()
+
+    return render_template("history.html", games = games)
 
 if __name__ == "__main__":
     app.run(debug=True)
