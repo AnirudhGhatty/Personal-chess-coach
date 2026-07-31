@@ -9,13 +9,13 @@ PawnSense is a Flask-based chess analysis web application that helps players rev
 # 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](static/screenshots/home.png)
+![Home Page](Homepage.png)
 
 ### ♟️ Analysis Page
-![Analysis Page](static/screenshots/analysis.png)
+![Analysis Page](AnalysisPage.png)
 
 ### 📚 Game History
-![Game History](static/screenshots/history.png)
+![Game History](GameHistoryPage.png)
 
 ---
 
